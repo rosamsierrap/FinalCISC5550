@@ -1,5 +1,9 @@
 #!/bin/bash
 
+sudo apt update
+sudo apt install python3-pip
+pip3 install flask
+
 #select project to work on
 gcloud config set project my-project-cisc5550
 
