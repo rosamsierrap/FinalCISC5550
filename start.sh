@@ -15,4 +15,4 @@ gcloud compute instances create instance-2 \
 gcloud compute ssh instance-2 --zone=us-central1-a
 
 #Test the app on Google Cloud
-sudo python3 todolist.py &
+sudo python todolist.py &
