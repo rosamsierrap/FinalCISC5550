@@ -10,13 +10,10 @@ def show_list():
       return render_template('index.html', todolist=resp)
 
 @app.route("/add", methods=['POST'])
-def add_entry():
-    data = {
-        "what_to_do": request.form['what_to_do'],
-        "due_date": request.form['due_date']
-    }
-    response = requests.post("http://localhost:5001/api/add", json=data)
-    return redirect("/")
+def add_entry(): # this is the counterpart of add_entry() from homework 3
+    requests.post("http://localhost:5001/api/items", json={
+                  "what_to_do": request.form['what_to_do'], "due_date": request.form['due_date']})
+    return redirect(url_for('show_list'))
 
 @app.route("/delete/<item>")
 def delete_entry(item):
