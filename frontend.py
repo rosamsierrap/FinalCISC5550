@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, url_for
+from flask import Flask, render_template, redirect, request, url_for,g
 import requests
 
 app = Flask(__name__)
@@ -32,4 +32,4 @@ def close_request(error):
         g.sqlite_db.close()
           
 if __name__ == "__main__":
-    app.run("0.0.0.0", port=80)
+    app.run("0.0.0.0", port=8080)
