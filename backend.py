@@ -15,6 +15,15 @@ def show_list():
               for row in entries]
     return jsonify(tdlist)
 
+@app.route("/api/add", methods=["POST"])
+def add_entry():
+    db = get_db()
+    data = request.get_json()  # Assuming the frontend sends JSON data
+    db.execute('INSERT INTO entries (what_to_do, due_date) VALUES (?, ?)',
+               (data['what_to_do'], data['due_date']))
+    db.commit()
+    return jsonify({"message": "Entry added successfully"})
+
 if __name__ == "__main__":
     app.run("localhost", 5001)
 
