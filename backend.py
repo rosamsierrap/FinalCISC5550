@@ -24,6 +24,33 @@ def add_entry():
     db.commit()
     return jsonify({"message": "Entry added successfully"})
 
+
+@app.route("/api/delete/<item>", methods=["DELETE"])
+def delete_entry(item):
+    db = get_db()
+    db.execute("DELETE FROM entries WHERE what_to_do=?", (item,))
+    db.commit()
+    return jsonify({"message": "Entry deleted successfully"})
+
+
+@app.route("/api/mark/<item>", methods=["PUT"])
+def mark_as_done(item):
+    db = get_db()
+    db.execute("UPDATE entries SET status='done' WHERE what_to_do=?", (item,))
+    db.commit()
+    return jsonify({"message": "Entry marked as done"})
+
+
+def get_db():
+    if not hasattr(g, 'sqlite_db'):
+        g.sqlite_db = sqlite3.connect(app.config['DATABASE'])
+    return g.sqlite_db
+
+@app.teardown_appcontext
+def close_db(error):
+    if hasattr(g, 'sqlite_db'):
+        g.sqlite_db.close()
+
 if __name__ == "__main__":
     app.run("localhost", 5001)
 
