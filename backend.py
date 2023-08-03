@@ -52,7 +52,8 @@ def close_db(error):
         g.sqlite_db.close()
 
 if __name__ == "__main__":
-    app.run("localhost", 5001)
+    #app.run("localhost", 5001)
+    app.run("0.0.0.0", port=80)
 
 
 
