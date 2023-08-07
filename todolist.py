@@ -5,7 +5,7 @@ import requests  # similar purpose to urllib.request, just more convenience
 import os
 
 app = Flask(__name__)
-TODO_API_URL = "http://34.133.229.249"+":5001"
+TODO_API_URL = "http://"+os.environ['TODO_API_IP']+":5001"
 
 
 @app.route("/")
