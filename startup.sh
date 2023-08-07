@@ -10,6 +10,6 @@ pip3 install --upgrade flask
 #wget http://storm.cis.fordham.edu/ji/cisc5550cloud/hw4/todolist_api.py
 #wget http://storm.cis.fordham.edu/ji/cisc5550cloud/hw4/todolist.db
 
-git clone https://github.com/rosamsierrap/cisc5550.git
+#git clone https://github.com/rosamsierrap/cisc5550.git
 
 python3 todolist_api.py
