@@ -10,12 +10,12 @@ gcloud compute instances create cisc5550-api \
     --image-family=ubuntu-2004-lts \
     --image-project=ubuntu-os-cloud \
     --tags=http-server \
-    --zone=us-central1-a
+    --zone=us-central1-c
 
 #connect to the VM
-gcloud compute ssh cisc5550-api --zone=us-central1-a \
+gcloud compute ssh cisc5550-api --zone=us-central1-c \
    --command="sudo apt update && sudo apt install -y python3-pip && sudo pip3 install flask && 
-   sudo -H pip3 install flask && git clone https://github.com/rosamsierrap/cisc5550.git && sudo bash startup.sh"
+   sudo -H pip3 install flask && git clone https://github.com/rosamsierrap/cisc5550.git && cd cisc5550/ && sudo bash startup.sh"
 
 
 gcloud compute firewall-rules create rule-allow-tcp-5001 --source-ranges 0.0.0.0/0 --target-tags http-server --allow tcp:5001
@@ -24,6 +24,7 @@ export TODO_API_IP=`gcloud compute instances list --filter="name=cisc5550-api" -
 
 # next, deploy the app that depens on api
 docker build -t rosasierra/cisc5550todoapp --build-arg api_ip=${TODO_API_IP} .
+
 # docker login
 docker push rosasierra/cisc5550todoapp
 
