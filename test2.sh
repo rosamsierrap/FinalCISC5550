@@ -1,3 +1,5 @@
+gcloud components install gke-gcloud-auth-plugin
+
 export TODO_API_IP=`gcloud compute instances list --filter="name=cisc5550-api" --format="value(EXTERNAL_IP)"`
 
 # next, deploy the app that depens on api
