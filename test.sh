@@ -1,6 +1,6 @@
 #!/bin/bash
 gcloud config set project my-project-cisc5550
-gcloud config set compute/zone us-central1-a
+gcloud config set compute/zone us-east1-b
 gcloud compute instances delete cisc5550-api
 gcloud compute firewall-rules delete rule-allow-tcp-5001
 
