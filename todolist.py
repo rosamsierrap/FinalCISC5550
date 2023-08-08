@@ -1,12 +1,12 @@
 # This is a simple example web app that is meant to illustrate the basics.
-from flask import Flask, render_template, redirect, g, request, url_for, jsonify, json
+from flask import Flask, render_template, redirect, g, request, url_for, jsonify, json, session, flash
 import urllib
 import requests  # similar purpose to urllib.request, just more convenience
 import os
 
 app = Flask(__name__)
 TODO_API_URL = "http://"+os.environ['TODO_API_IP']+":5001"
-
+app.secret_key = 'your_secret_key'
 
 @app.route("/login", methods=['GET'])
 def login_page():
@@ -19,7 +19,7 @@ def show_list():
     resp = resp.json()
     return render_template('index.html', todolist=resp)
 
-
+        
 # Add authentication checks for protected routes
 @app.route("/add", methods=['POST'])
 def add_entry():
@@ -32,7 +32,7 @@ def add_entry():
         return redirect(url_for('login_page'))
 
 
-@app.route("/delete/<item>")
+@app.route("/delete/<item>", methods=['POST'])
 def delete_entry(item):
     if 'username' in session:
         item = urllib.parse.quote(item)
@@ -43,7 +43,7 @@ def delete_entry(item):
         return redirect(url_for('login_page'))
 
 
-@app.route("/mark/<item>")
+@app.route("/mark/<item>", methods=['POST'])
 def mark_as_done(item):
     if 'username' in session:
         item = urllib.parse.quote(item)
