@@ -10,18 +10,19 @@ gcloud compute instances create cisc5550-api \
     --image-family=ubuntu-2004-lts \
     --image-project=ubuntu-os-cloud \
     --tags=http-server \
-    --zone=us-central1-c
+    --zone=us-central1-c \
+    --metadata-from-file startup-script=./startup.sh
 
-sleep 30  #Waiting for the VM to be done
+#sleep 30  #Waiting for the VM to be done
 
 # SSH into the VM and run commands
-gcloud compute ssh cisc5550-api --zone=us-central1-c --command "\
-    sudo apt update && \
-    sudo apt install -y python3-pip && \
-    sudo pip3 install flask && \
-    git clone https://github.com/rosamsierrap/cisc5550.git && \
-    cd cisc5550/ && \
-    sudo bash startup.sh"
+#gcloud compute ssh cisc5550-api --zone=us-central1-c --command "\
+#    sudo apt update && \
+#    sudo apt install -y python3-pip && \
+#    sudo pip3 install flask && \
+#    git clone https://github.com/rosamsierrap/cisc5550.git && \
+#    cd cisc5550/ && \
+#    sudo bash startup.sh"
 
 gcloud compute firewall-rules create rule-allow-tcp-5001 --source-ranges 0.0.0.0/0 --target-tags http-server --allow tcp:5001
 
