@@ -1,14 +1,44 @@
 # RESTful API
 from flask import Flask, render_template, redirect, g, request, url_for, jsonify, Response
+from flask import session, flash ####
 import sqlite3
 import urllib
 import json
 
 DATABASE = 'todolist.db'
 
+
 app = Flask(__name__)
 app.config.from_object(__name__)
 
+#############################################
+app.secret_key = 'your_secret_key'
+users = {
+    'user1':'password1',
+    'user2':'password2'
+}
+
+@app.route("/login", methods=['POST'])
+def login():
+    username = request.form['username']
+    password = request.form['password']
+    
+    # Perform authentication logic here (compare hashed passwords, etc.)
+    # If authenticated, set user info in session
+    if username in users and users[username]==password:
+        session['username'] = username
+        flash('Logged in successfully', 'success')
+        return redirect(url_for('show_list'))
+    else:
+        flash('Invalid credentials', 'error')
+        return redirect(url_for('login_page'))
+
+@app.route("/logout")
+def logout():
+    session.pop('username', None)
+    flash('Logged out successfully', 'info')
+    return redirect(url_for('login_page'))
+#####################################################
 
 @app.route("/api/items")  # default method is GET
 def get_items():
