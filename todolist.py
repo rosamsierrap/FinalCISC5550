@@ -12,7 +12,6 @@ app.secret_key = 'your_secret_key'
 def login_page():
     return render_template('login.html')
 
-
 @app.route("/")
 def show_list():
     resp = requests.get(TODO_API_URL+"/api/items")
