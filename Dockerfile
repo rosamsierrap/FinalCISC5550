@@ -7,5 +7,5 @@ RUN pip install flask
 RUN pip install requests
 EXPOSE 5000/tcp
 COPY todolist.py .
-COPY templates/index.html templates/
+COPY templates/* templates/
 CMD python todolist.py
