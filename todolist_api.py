@@ -18,22 +18,21 @@ users = {
     'user2':'password2'
 }
 
-@app.route("/login", methods=['POST'])
+@app.route("/api/login", methods=['GET', 'POST'])
 def login():
-    username = request.form['username']
-    password = request.form['password']
-    
-    # Perform authentication logic here (compare hashed passwords, etc.)
-    # If authenticated, set user info in session
-    if username in users and users[username]==password:
-        session['username'] = username
-        flash('Logged in successfully', 'success')
-        return redirect(url_for('show_list'))
-    else:
-        flash('Invalid credentials', 'error')
-        return redirect(url_for('login_page'))
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        if username in users and check_password_hash(users[username], password):
+            session['username'] = username
+            flash('Logged in successfully', 'success')
+            return redirect(url_for('show_list'))
+        else:
+            flash('Invalid credentials', 'error')
+    return render_template('login.html')
 
-@app.route("/logout")
+@app.route("/api/logout")
 def logout():
     session.pop('username', None)
     flash('Logged out successfully', 'info')
